@@ -90,6 +90,17 @@ bool vequal(vector<int>& v1,vector<int>& v2){
 	return true;
 }
 
+template <typename T>
+bool elementEqual(vector<T> v)
+{
+	for (int i = 1; i < v.size(); i++)
+	{
+		if (v[i]!=v[i-1])return false;
+	}
+	return true;
+	
+}
+
 int main(){
 	return 0;
 }
