@@ -22,7 +22,7 @@ typedef long long ll;
 // g++ main.cpp -o main
 
 template <typename T>
-void printVector(vector<T> v)
+void printVector(vector<T> &v)
 {
 	for (int i = 0; i < v.size() - 1; i++)
 	{
@@ -32,7 +32,7 @@ void printVector(vector<T> v)
 }
 
 template <typename T>
-void printVectorNoSpace(vector<T> v)
+void printVectorNoSpace(vector<T> &v)
 {
 	for (int i = 0; i < v.size() - 1; i++)
 	{
@@ -67,7 +67,7 @@ bool isPrime(int a)
 }
 
 template <typename T>
-bool isinset(unordered_set<T> s, T n)
+bool isinset(unordered_set<T> &s, T n)
 {
 	return s.find(n) != s.end();
 }
@@ -109,7 +109,7 @@ bool vequal(vector<int> &v1, vector<int> &v2)
 }
 
 template <typename T>
-bool elementEqual(vector<T> v)
+bool elementEqual(vector<T> &v)
 {
 	for (int i = 1; i < v.size(); i++)
 	{
