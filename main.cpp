@@ -1,5 +1,20 @@
 #include <bits/stdc++.h>
 
+#include <iostream>
+#include <vector>
+#include <string.h>
+#include <string>
+#include <set>
+#include <unordered_set>
+#include <queue>
+#include <map>
+#include <unordered_map>
+#include <stack>
+#include <iomanip>
+#include <algorithm>
+#include <cmath>
+#include <limits.h>
+
 using namespace std;
 
 typedef long long ll;
@@ -26,9 +41,8 @@ void printVectorNoSpace(vector<T> v)
 	cout << v[v.size() - 1] << endl;
 }
 
-
-
-int gcd(int a, int b)
+template <typename T>
+T gcd(T a, T b)
 {
 	if (b == 0)
 		return a;
@@ -51,7 +65,6 @@ bool isPrime(int a)
 	}
 	return true;
 }
-
 
 template <typename T>
 bool isinset(unordered_set<T> s, T n)
@@ -76,16 +89,21 @@ void printCase(int i)
 
 struct cmp
 {
-    bool operator()(string& s1, string& s2)
-    {
-        if (s1+s2<s2+s1)return s1>s2;
-		else return s2>s1;
-    }
+	bool operator()(string &s1, string &s2)
+	{
+		if (s1 + s2 < s2 + s1)
+			return s1 > s2;
+		else
+			return s2 > s1;
+	}
 };
 
-bool vequal(vector<int>& v1,vector<int>& v2){
-	for (int i = 0;i<v1.size();i++){
-		if (v1[i]!=v2[i])return false;
+bool vequal(vector<int> &v1, vector<int> &v2)
+{
+	for (int i = 0; i < v1.size(); i++)
+	{
+		if (v1[i] != v2[i])
+			return false;
 	}
 	return true;
 }
@@ -95,14 +113,40 @@ bool elementEqual(vector<T> v)
 {
 	for (int i = 1; i < v.size(); i++)
 	{
-		if (v[i]!=v[i-1])return false;
+		if (v[i] != v[i - 1])
+			return false;
 	}
 	return true;
-	
 }
 
-int main(){
+template <typename T>
+T lcm(T a, T b)
+{
+	return a / gcd(a, b) * b;
+}
+
+void splitbyspace(vector<string> &v, string &s)
+{
+	string t = "";
+	for (int i = 0; i < s.length(); i++)
+	{
+		if (s[i] == ' ')
+		{
+			if (t.size() > 0)
+			{
+				v.push_back(t);
+			}
+			t = "";
+		}
+		else
+			t += s[i];
+	}
+	if (t.length() > 0)
+		v.push_back(t);
+	return;
+}
+
+int main()
+{
 	return 0;
 }
-
-
