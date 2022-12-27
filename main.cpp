@@ -146,6 +146,19 @@ void splitbyspace(vector<string> &v, string &s)
 	return;
 }
 
+template <typename T>
+string decto(T n,T d) // d<=10
+{
+	string ans = "";
+	while (n>=d){
+		int mod = n%d;
+		ans=to_string(mod)+ans;
+		n/=d;
+	}
+	ans=to_string(n)+ans;
+	return ans;
+}
+
 int main()
 {
 	return 0;
