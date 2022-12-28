@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
 
 #include <iostream>
 #include <vector>
@@ -147,15 +147,51 @@ void splitbyspace(vector<string> &v, string &s)
 }
 
 template <typename T>
-string decto(T n,T d) // d<=10
+string decto(T n, T d) // d<=10
 {
 	string ans = "";
-	while (n>=d){
-		int mod = n%d;
-		ans=to_string(mod)+ans;
-		n/=d;
+	while (n >= d)
+	{
+		int mod = n % d;
+		ans = to_string(mod) + ans;
+		n /= d;
 	}
-	ans=to_string(n)+ans;
+	ans = to_string(n) + ans;
+	return ans;
+}
+
+/** 排列组合 **/
+template <typename T>
+ll comp(T a, T b)
+{
+	if (a < b)
+		return comp(b, a);
+	if (a == b)
+		return 1;
+	if (a - b > b)
+		b = a - b;
+	ll ans = 1;
+	for (ll i = a; i >= a - b + 1; i--)
+	{
+		ans *= i;
+	}
+	for (ll i = b; i >= 2; i--)
+	{
+		ans /= i;
+	}
+	return ans;
+}
+
+template <typename T>
+ll perm(T a, T b)
+{
+	if (a < b)
+		return perm(b, a);
+	ll ans = 1;
+	for (ll i = a; i >= a - b + 1; i--)
+	{
+		ans *= i;
+	}
 	return ans;
 }
 
