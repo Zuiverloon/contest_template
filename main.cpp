@@ -195,6 +195,21 @@ ll perm(T a, T b)
 	return ans;
 }
 
+template <typename T>
+int countone(T n)
+{
+	int ans = 0;
+	while (n != 0)
+	{
+		if ((n & 1) == 1)
+		{
+			ans++;
+		}
+		n >>= 1;
+	}
+	return ans;
+}
+
 int main()
 {
 	return 0;
