@@ -87,17 +87,6 @@ void printCase(int i)
 	cout << "case #" << i << ":" << endl;
 }
 
-struct cmp
-{
-	bool operator()(string &s1, string &s2)
-	{
-		if (s1 + s2 < s2 + s1)
-			return s1 > s2;
-		else
-			return s2 > s1;
-	}
-};
-
 bool vequal(vector<int> &v1, vector<int> &v2)
 {
 	for (int i = 0; i < v1.size(); i++)
@@ -208,6 +197,17 @@ int countone(T n)
 		n >>= 1;
 	}
 	return ans;
+}
+
+void priority_queue_definition()
+{
+	auto cmp = [](int a, int b) -> bool
+	{ return a < b; };
+	priority_queue<int, vector<int>, function<bool(int a, int b)>> q(cmp);
+	q.push(2);
+	q.push(3);
+	q.push(1);
+	cout << q.top() << endl; // output: 3
 }
 
 int main()
