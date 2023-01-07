@@ -49,6 +49,12 @@ T gcd(T a, T b)
 	return gcd(b, a % b);
 }
 
+template <typename T>
+T lcm(T a, T b)
+{
+	return a / gcd(a, b) * b;
+}
+
 bool isPrime(int a)
 {
 	if (a == 1)
@@ -106,12 +112,6 @@ bool elementEqual(vector<T> &v)
 			return false;
 	}
 	return true;
-}
-
-template <typename T>
-T lcm(T a, T b)
-{
-	return a / gcd(a, b) * b;
 }
 
 void splitbyspace(vector<string> &v, string &s)
