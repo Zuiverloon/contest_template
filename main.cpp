@@ -210,6 +210,32 @@ void priority_queue_definition()
 	cout << q.top() << endl; // output: 3
 }
 
+template <typename T>
+int digitSum(T num)
+{
+	int ans = 0;
+	while (num != 0)
+	{
+		int t = num % 10;
+		ans += t;
+		num /= 10;
+	}
+	return ans;
+}
+
+ll reverseNum(int num)
+{
+	ll ans = 0;
+	while (num != 0)
+	{
+		int t = num % 10;
+		ans *= 10;
+		ans += t;
+		num /= 10;
+	}
+	return ans;
+}
+
 int main()
 {
 	return 0;
