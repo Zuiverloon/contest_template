@@ -236,6 +236,16 @@ ll reverseNum(int num)
 	return ans;
 }
 
+ll factorial(int num) // 阶乘
+{
+	ll ans = 1;
+	for (int i = 2; i <= num; i++)
+	{
+		ans *= i;
+	}
+	return ans;
+}
+
 int main()
 {
 	return 0;
