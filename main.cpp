@@ -42,7 +42,7 @@ void printVectorNoSpace(vector<T> &v)
 }
 
 template <typename T>
-T gcd(T a, T b)
+T gcd(T a, T b) // 最大公因数
 {
 	if (b == 0)
 		return a;
@@ -50,12 +50,12 @@ T gcd(T a, T b)
 }
 
 template <typename T>
-T lcm(T a, T b)
+T lcm(T a, T b) // 最小公倍数
 {
 	return a / gcd(a, b) * b;
 }
 
-bool isPrime(int a)
+bool isPrime(int a) // 判断素数
 {
 	if (a == 1)
 		return false;
@@ -73,15 +73,15 @@ bool isPrime(int a)
 }
 
 template <typename T>
-bool isinset(unordered_set<T> &s, T n)
+bool isinset(unordered_set<T> &s, T n) // 判断是否在set内
 {
 	return s.find(n) != s.end();
 }
 
-ll power(int a, int n)
+ll power(int a, int n) // a的n次方
 {
 	ll ans = 1;
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < n; ++i)
 	{
 		ans *= a;
 	}
@@ -93,9 +93,9 @@ void printCase(int i)
 	cout << "case #" << i << ":" << endl;
 }
 
-bool vequal(vector<int> &v1, vector<int> &v2)
+bool vequal(vector<int> &v1, vector<int> &v2) // 判断两个vector是否相等
 {
-	for (int i = 0; i < v1.size(); i++)
+	for (int i = 0; i < v1.size(); ++i)
 	{
 		if (v1[i] != v2[i])
 			return false;
@@ -104,9 +104,9 @@ bool vequal(vector<int> &v1, vector<int> &v2)
 }
 
 template <typename T>
-bool elementEqual(vector<T> &v)
+bool elementEqual(vector<T> &v) // 判断vector中每个元素是否相等
 {
-	for (int i = 1; i < v.size(); i++)
+	for (int i = 1; i < v.size(); ++i)
 	{
 		if (v[i] != v[i - 1])
 			return false;
@@ -114,10 +114,10 @@ bool elementEqual(vector<T> &v)
 	return true;
 }
 
-void splitbyspace(vector<string> &v, string &s)
+void splitbyspace(vector<string> &v, string &s) // 用空格分割字符串得到数组
 {
 	string t = "";
-	for (int i = 0; i < s.length(); i++)
+	for (int i = 0; i < s.length(); ++i)
 	{
 		if (s[i] == ' ')
 		{
@@ -136,7 +136,7 @@ void splitbyspace(vector<string> &v, string &s)
 }
 
 template <typename T>
-string decto(T n, T d) // d<=10
+string decto(T n, T d) // d<=10 进制转换 把十进制的数n转化为d进制
 {
 	string ans = "";
 	while (n >= d)
@@ -151,7 +151,7 @@ string decto(T n, T d) // d<=10
 
 /** 排列组合 **/
 template <typename T>
-ll comp(T a, T b)
+ll comp(T a, T b) // 组合数
 {
 	if (a < b)
 		return comp(b, a);
@@ -160,11 +160,11 @@ ll comp(T a, T b)
 	if (a - b > b)
 		b = a - b;
 	ll ans = 1;
-	for (ll i = a; i >= a - b + 1; i--)
+	for (ll i = a; i >= a - b + 1; --i)
 	{
 		ans *= i;
 	}
-	for (ll i = b; i >= 2; i--)
+	for (ll i = b; i >= 2; --i)
 	{
 		ans /= i;
 	}
@@ -172,12 +172,12 @@ ll comp(T a, T b)
 }
 
 template <typename T>
-ll perm(T a, T b)
+ll perm(T a, T b) // 排列数
 {
 	if (a < b)
 		return perm(b, a);
 	ll ans = 1;
-	for (ll i = a; i >= a - b + 1; i--)
+	for (ll i = a; i >= a - b + 1; --i)
 	{
 		ans *= i;
 	}
@@ -185,7 +185,7 @@ ll perm(T a, T b)
 }
 
 template <typename T>
-int countone(T n)
+int countone(T n) // 数一个数的二进制有几个1
 {
 	int ans = 0;
 	while (n != 0)
@@ -199,7 +199,7 @@ int countone(T n)
 	return ans;
 }
 
-void priority_queue_definition()
+void priority_queue_definition() // 优先队列定义
 {
 	auto cmp = [](int a, int b) -> bool
 	{ return a < b; };
@@ -211,7 +211,7 @@ void priority_queue_definition()
 }
 
 template <typename T>
-int digitSum(T num)
+int digitSum(T num) // 求一个数 各位之和  1234 —> 10
 {
 	int ans = 0;
 	while (num != 0)
@@ -223,7 +223,7 @@ int digitSum(T num)
 	return ans;
 }
 
-ll reverseNum(int num)
+ll reverseNum(int num) // 反转一个数 1234 -> 4321
 {
 	ll ans = 0;
 	while (num != 0)
@@ -239,7 +239,7 @@ ll reverseNum(int num)
 ll factorial(int num) // 阶乘
 {
 	ll ans = 1;
-	for (int i = 2; i <= num; i++)
+	for (int i = 2; i <= num; ++i)
 	{
 		ans *= i;
 	}
