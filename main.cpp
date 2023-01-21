@@ -93,6 +93,15 @@ void printCase(int i)
 	cout << "case #" << i << ":" << endl;
 }
 
+template <typename T>
+ll vsum(vector<int> &v)
+{ // vector求和
+	ll sum = 0;
+	for (int i : v)
+		sum += v;
+	return sum;
+}
+
 bool vequal(vector<int> &v1, vector<int> &v2) // 判断两个vector是否相等
 {
 	for (int i = 0; i < v1.size(); ++i)
