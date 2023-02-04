@@ -15,30 +15,29 @@
 #include <cmath>
 #include <limits.h>
 
-using namespace std;
 
 typedef long long ll;
 
 // g++ main.cpp -o main
 
 template <typename T>
-void printVector(vector<T> &v)
+void printVector(std::vector<T> &v)
 {
 	for (int i = 0; i < v.size() - 1; i++)
 	{
-		cout << v[i] << " ";
+		std::cout << v[i] << " ";
 	}
-	cout << v[v.size() - 1] << endl;
+	std::cout << v[v.size() - 1] <<"\n";
 }
 
 template <typename T>
-void printVectorNoSpace(vector<T> &v)
+void printVectorNoSpace(std::vector<T> &v)
 {
 	for (int i = 0; i < v.size() - 1; i++)
 	{
-		cout << v[i];
+		std::cout << v[i];
 	}
-	cout << v[v.size() - 1] << endl;
+	std::cout << v[v.size() - 1] << "\n";
 }
 
 template <typename T>
@@ -63,7 +62,7 @@ bool isPrime(int a) // 判断素数
 		return true;
 	if (a % 2 == 0)
 		return false;
-	int limit = (int)sqrt(a);
+	int limit = (int)std::sqrt(a);
 	for (int i = 3; i <= limit; i++)
 	{
 		if (a % i == 0)
@@ -73,7 +72,7 @@ bool isPrime(int a) // 判断素数
 }
 
 template <typename T>
-bool isinset(unordered_set<T> &s, T n) // 判断是否在set内
+bool isinset(std::unordered_set<T> &s, T n) // 判断是否在set内
 {
 	return s.find(n) != s.end();
 }
@@ -90,19 +89,19 @@ ll power(int a, int n) // a的n次方
 
 void printCase(int i)
 {
-	cout << "case #" << i << ":" << endl;
+	std::cout << "case #" << i << ":\n";
 }
 
 template <typename T>
-ll vsum(vector<int> &v)
+ll vsum(std::vector<int> &v)
 { // vector求和
 	ll sum = 0;
 	for (int i : v)
-		sum += v;
+		sum += i;
 	return sum;
 }
 
-bool vequal(vector<int> &v1, vector<int> &v2) // 判断两个vector是否相等
+bool vequal(std::vector<int> &v1, std::vector<int> &v2) // 判断两个vector是否相等
 {
 	for (int i = 0; i < v1.size(); ++i)
 	{
@@ -113,7 +112,7 @@ bool vequal(vector<int> &v1, vector<int> &v2) // 判断两个vector是否相等
 }
 
 template <typename T>
-bool elementEqual(vector<T> &v) // 判断vector中每个元素是否相等
+bool elementEqual(std::vector<T> &v) // 判断vector中每个元素是否相等
 {
 	for (int i = 1; i < v.size(); ++i)
 	{
@@ -123,9 +122,9 @@ bool elementEqual(vector<T> &v) // 判断vector中每个元素是否相等
 	return true;
 }
 
-void splitbyspace(vector<string> &v, string &s) // 用空格分割字符串得到数组
+void splitbyspace(std::vector<std::string> &v, std::string &s) // 用空格分割字符串得到数组
 {
-	string t = "";
+	std::string t = "";
 	for (int i = 0; i < s.length(); ++i)
 	{
 		if (s[i] == ' ')
@@ -145,16 +144,16 @@ void splitbyspace(vector<string> &v, string &s) // 用空格分割字符串得�
 }
 
 template <typename T>
-string decto(T n, T d) // d<=10 进制转换 把十进制的数n转化为d进制
+std::string decto(T n, T d) // d<=10 进制转换 把十进制的数n转化为d进制
 {
-	string ans = "";
+	std::string ans = "";
 	while (n >= d)
 	{
 		int mod = n % d;
-		ans = to_string(mod) + ans;
+		ans = std::to_string(mod) + ans;
 		n /= d;
 	}
-	ans = to_string(n) + ans;
+	ans = std::to_string(n) + ans;
 	return ans;
 }
 
@@ -212,11 +211,11 @@ void priority_queue_definition() // 优先队列定义
 {
 	auto cmp = [](int a, int b) -> bool
 	{ return a < b; };
-	priority_queue<int, vector<int>, function<bool(int a, int b)>> q(cmp);
+	std::priority_queue<int, std::vector<int>, std::function<bool(int a, int b)>> q(cmp);
 	q.push(2);
 	q.push(3);
 	q.push(1);
-	cout << q.top() << endl; // output: 3
+	std::cout << q.top() <<"\n"; // output: 3
 }
 
 template <typename T>
