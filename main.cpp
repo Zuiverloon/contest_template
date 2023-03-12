@@ -15,7 +15,6 @@
 #include <cmath>
 #include <limits.h>
 
-
 typedef long long ll;
 
 // g++ main.cpp -o main
@@ -27,7 +26,7 @@ void printVector(std::vector<T> &v)
 	{
 		std::cout << v[i] << " ";
 	}
-	std::cout << v[v.size() - 1] <<"\n";
+	std::cout << v[v.size() - 1] << "\n";
 }
 
 template <typename T>
@@ -77,14 +76,47 @@ bool isinset(std::unordered_set<T> &s, T n) // 判断是否在set内
 	return s.find(n) != s.end();
 }
 
-ll power(int a, int n) // a的n次方
+ll power(ll a, ll n) // a的n次方
 {
-	ll ans = 1;
-	for (int i = 0; i < n; ++i)
+	if (n == 0)
+		return 1l;
+	if (n == 1)
+		return a;
+	if (n % 2 == 0)
 	{
-		ans *= a;
+		ll tans = power(a, n / 2);
+		tans *= tans;
+		return tans;
 	}
-	return ans;
+	else
+	{
+		ll tans = power(a, n / 2);
+		tans *= tans;
+		tans *= a;
+		return tans;
+	}
+}
+
+ll powerAndMod(ll a, ll n, ll m)
+{
+	if (n == 0)
+		return 1l % m;
+	if (n == 1)
+		return a % m;
+	if (n % 2 == 0)
+	{
+		ll tans = powerAndMod(a, n / 2, m);
+		tans *= tans;
+		return tans % m;
+	}
+	else
+	{
+		ll tans = powerAndMod(a, n / 2, m);
+		tans *= tans;
+		tans %= m;
+		tans *= a;
+		return tans % m;
+	}
 }
 
 void printCase(int i)
@@ -215,7 +247,7 @@ void priority_queue_definition() // 优先队列定义
 	q.push(2);
 	q.push(3);
 	q.push(1);
-	std::cout << q.top() <<"\n"; // output: 3
+	std::cout << q.top() << "\n"; // output: 3
 }
 
 template <typename T>
