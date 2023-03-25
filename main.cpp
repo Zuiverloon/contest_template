@@ -20,6 +20,12 @@ typedef long long ll;
 // g++ main.cpp -o main
 
 template <typename T>
+void print(T t)
+{
+	std::cout << t << "\n";
+}
+
+template <typename T>
 void printVector(std::vector<T> &v)
 {
 	for (int i = 0; i < v.size() - 1; i++)
@@ -286,9 +292,30 @@ ll factorial(int num) // 阶乘
 	return ans;
 }
 
+void exgcd(int a, int b, int &x, int &y)
+{ // ax + by = gcd(a,b)
+	if (b == 0)
+	{
+		x = 1, y = 0;
+		return;
+	}
+	exgcd(b, a % b, y, x);
+	y -= a / b * x;
+}
+
+void solve()
+{
+}
+
 int main()
 {
 	std::ios::sync_with_stdio(false);
 	std::cin.tie(nullptr);
+	int n = 1;
+	// std::cin>>n;
+	while (n--)
+	{
+		solve();
+	}
 	return 0;
 }
