@@ -44,6 +44,14 @@ void printVectorNoSpace(std::vector<T> &v)
 	}
 	std::cout << v[v.size() - 1] << "\n";
 }
+template <typename T>
+void printMatrix(std::vector<std::vector<T>> &m)
+{
+	for (int i = 0; i < m.size() - 1; i++)
+	{
+		printVector(m[i]);
+	}
+}
 
 template <typename T>
 T gcd(T a, T b) // 最大公因数
@@ -302,6 +310,8 @@ void exgcd(int a, int b, int &x, int &y)
 	exgcd(b, a % b, y, x);
 	y -= a / b * x;
 }
+
+// using namespace std;
 
 void solve()
 {
