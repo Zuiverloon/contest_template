@@ -47,7 +47,7 @@ void printVectorNoSpace(std::vector<T> &v)
 template <typename T>
 void printMatrix(std::vector<std::vector<T>> &m)
 {
-	for (int i = 0; i < m.size() - 1; i++)
+	for (int i = 0; i < m.size(); i++)
 	{
 		printVector(m[i]);
 	}
