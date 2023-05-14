@@ -19,6 +19,9 @@ typedef long long ll;
 
 // g++ main.cpp -o main
 
+int mod1e9 = 1e9 + 7;
+int modatc = 998244353;
+
 template <typename T>
 void print(T t)
 {
@@ -316,6 +319,9 @@ void exgcd(int a, int b, int &x, int &y)
 void solve()
 {
 }
+
+// clang++ -std=c++17 main.cpp -o main
+// main
 
 int main()
 {
