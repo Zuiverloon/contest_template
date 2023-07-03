@@ -1,5 +1,6 @@
 // #include <bits/stdc++.h>
 
+#include <functional> //c++17 function
 #include <iostream>
 #include <vector>
 #include <string.h>
@@ -16,16 +17,24 @@
 #include <limits.h>
 
 typedef long long ll;
+typedef int64_t i64;
+typedef int32_t i32;
 
 // g++ main.cpp -o main
 
 int mod1e9 = 1e9 + 7;
-int modatc = 998244353;
+int mod998 = 998244353;
 
 template <typename T>
 void print(T t)
 {
-	std::cout << t << "\n";
+	std::cout << t << std::endl;
+}
+
+template <typename T>
+void printans(T t)
+{
+	std::cout << "ans = " << t << std::endl;
 }
 
 template <typename T>
@@ -318,18 +327,53 @@ void exgcd(int a, int b, int &x, int &y)
 
 void solve()
 {
+	int n;
+	std::cin >> n;
+	std::vector<int> v(n, 0);
+	for (int i = 0; i < n; i++)
+	{
+		std::cin >> v[i];
+	}
+	std::vector<std::vector<i64>> dp(n, std::vector<i64>(2, 0));
+	i64 pos = 0, neg = 0;
+	if (v[0] > 0)
+	{
+		dp[0][0] = 1; // pos
+	}
+	else
+	{
+		dp[0][1] = 1; // neg
+	}
+	pos = dp[0][0];
+	neg = dp[0][1];
+	for (int i = 1; i < n; i++)
+	{
+		if (v[i] > 0)
+		{
+			dp[i][0] = 1 + dp[i - 1][0];
+			dp[i][1] = dp[i - 1][1];
+		}
+		else
+		{
+			dp[i][0] = dp[i - 1][1];
+			dp[i][1] = 1 + dp[i - 1][0];
+		}
+		pos += dp[i][0];
+		neg += dp[i][1];
+	}
+	std::cout << neg << " " << pos << std::endl;
 }
 
 // clang++ -std=c++17 main.cpp -o main
-// main
+// ./main
 
 int main()
 {
 	std::ios::sync_with_stdio(false);
 	std::cin.tie(nullptr);
 	int n = 1;
-	// std::cin>>n;
-	while (n--)
+	// std::cin >> n;
+	for (int i = 1; i <= n; i++)
 	{
 		solve();
 	}
