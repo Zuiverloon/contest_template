@@ -79,21 +79,27 @@ T lcm(T a, T b) // 最小公倍数
 	return a / gcd(a, b) * b;
 }
 
+std::vector<bool> prime;
+
+void getPrimeNums(int ceiling)
+{
+	prime = std::vector<bool>(ceiling + 1, true);
+	int sqrtn = (int)std::sqrt(ceiling + 0.1);
+	for (int i = 2; i <= sqrtn; i++)
+	{
+		if (prime[i])
+		{
+			for (int j = i; j * i <= ceiling; j++)
+			{
+				prime[i * j] = false;
+			}
+		}
+	}
+}
+
 bool isPrime(int a) // 判断素数
 {
-	if (a == 1)
-		return false;
-	if (a == 2)
-		return true;
-	if (a % 2 == 0)
-		return false;
-	int limit = (int)std::sqrt(a);
-	for (int i = 3; i <= limit; i++)
-	{
-		if (a % i == 0)
-			return false;
-	}
-	return true;
+	return prime[a];
 }
 
 template <typename T>
@@ -327,41 +333,6 @@ void exgcd(int a, int b, int &x, int &y)
 
 void solve()
 {
-	int n;
-	std::cin >> n;
-	std::vector<int> v(n, 0);
-	for (int i = 0; i < n; i++)
-	{
-		std::cin >> v[i];
-	}
-	std::vector<std::vector<i64>> dp(n, std::vector<i64>(2, 0));
-	i64 pos = 0, neg = 0;
-	if (v[0] > 0)
-	{
-		dp[0][0] = 1; // pos
-	}
-	else
-	{
-		dp[0][1] = 1; // neg
-	}
-	pos = dp[0][0];
-	neg = dp[0][1];
-	for (int i = 1; i < n; i++)
-	{
-		if (v[i] > 0)
-		{
-			dp[i][0] = 1 + dp[i - 1][0];
-			dp[i][1] = dp[i - 1][1];
-		}
-		else
-		{
-			dp[i][0] = dp[i - 1][1];
-			dp[i][1] = 1 + dp[i - 1][0];
-		}
-		pos += dp[i][0];
-		neg += dp[i][1];
-	}
-	std::cout << neg << " " << pos << std::endl;
 }
 
 // clang++ -std=c++17 main.cpp -o main
