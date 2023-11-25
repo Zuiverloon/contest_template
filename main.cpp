@@ -15,6 +15,9 @@
 #include <algorithm>
 #include <cmath>
 #include <limits.h>
+#include <cctype>
+
+// #include <bits/stdc++.h>
 
 typedef long long ll;
 typedef int64_t i64;
@@ -108,6 +111,12 @@ bool isinset(std::unordered_set<T> &s, T n) // 判断是否在set内
 	return s.find(n) != s.end();
 }
 
+template <typename T>
+bool isinset(std::set<T> &s, T n) // 判断是否在set内
+{
+	return s.find(n) != s.end();
+}
+
 ll power(ll a, ll n) // a的n次方
 {
 	if (n == 0)
@@ -132,7 +141,7 @@ ll power(ll a, ll n) // a的n次方
 ll powerAndMod(ll a, ll n, ll m)
 {
 	if (n == 0)
-		return 1l % m;
+		return 1LL % m;
 	if (n == 1)
 		return a % m;
 	if (n % 2 == 0)
@@ -271,16 +280,16 @@ int countone(T n) // 数一个数的二进制有几个1
 	return ans;
 }
 
-void priority_queue_definition() // 优先队列定义
-{
-	auto cmp = [](int a, int b) -> bool
-	{ return a < b; };
-	std::priority_queue<int, std::vector<int>, std::function<bool(int a, int b)>> q(cmp);
-	q.push(2);
-	q.push(3);
-	q.push(1);
-	std::cout << q.top() << "\n"; // output: 3
-}
+// void priority_queue_definition() // 优先队列定义
+// {
+// 	auto cmp = [](int a, int b) -> bool
+// 	{ return a < b; };
+// 	std::priority_queue<int, std::vector<int>, std::function<bool(int a, int b)>> q(cmp);
+// 	q.push(2);
+// 	q.push(3);
+// 	q.push(1);
+// 	std::cout << q.top() << "\n"; // output: 3
+// }
 
 template <typename T>
 int digitSum(T num) // 求一个数 各位之和  1234 —> 10
@@ -322,13 +331,29 @@ void exgcd(int a, int b, int &x, int &y)
 { // ax + by = gcd(a,b)
 	if (b == 0)
 	{
-		x = 1, y = 0;
+		x = 1;
+		y = 0;
 		return;
 	}
 	exgcd(b, a % b, y, x);
 	y -= a / b * x;
 }
+int lowbit(int n)
+{
+	return n & (-n);
+}
 
+bool isPalindrome(std::string &s)
+{
+	for (int i = 0; i < s.length() / 2; i++)
+	{
+		if (s[i] != s[s.length() - 1 - i])
+		{
+			return false;
+		}
+	}
+	return true;
+}
 // using namespace std;
 
 void solve()
