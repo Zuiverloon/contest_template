@@ -23,15 +23,14 @@
 
 typedef long long ll;
 
-// g++ main.cpp -o main
+// clang++ -std=c++17 main.cpp -o main
 
-ll mod1e9 = 1e9 + 7;
-ll mod998 = 998244353;
-ll modboj = 987654321LL;
+ll mod1e9 = 1000000007LL;
+ll mod998 = 998244353LL;
 
 void print(ll t)
 {
-	printf("%lld", t);
+	printf("%lld\n", t);
 }
 
 void print(std::string s)
@@ -43,7 +42,8 @@ void printVector(std::vector<ll> &v)
 {
 	for (int i = 0; i < v.size(); i++)
 	{
-		printf("%lld%c", v[i], " \n"[i == v.size() - 1]);
+		std::cout << v[i] << " \n"[i == v.size() - 1];
+		// printf("%lld%c", v[i], " \n"[i == v.size() - 1]);
 	}
 }
 
@@ -51,7 +51,8 @@ void printVector(std::vector<std::string> &v)
 {
 	for (int i = 0; i < v.size(); i++)
 	{
-		printf("%s%c", v[i].c_str(), " \n"[i == v.size() - 1]);
+		std::cout << v[i] << " \n"[i == v.size() - 1];
+		// printf("%s%c", v[i].c_str(), " \n"[i == v.size() - 1]);
 	}
 }
 
@@ -108,14 +109,13 @@ void solve(int cas)
 
 int main()
 {
-	// std::ios::sync_with_stdio(false);
-	// std::cin.tie(nullptr);
-	// std::cout.tie(nullptr);
-	// print(1LL << 40);
+	std::ios::sync_with_stdio(false);
+	std::cin.tie(nullptr);
+	std::cout.tie(nullptr);
 	// initmobelong();
 
 	int n = 1;
-	scanf("%d", &n);
+	std::cin >> n;
 	for (int i = 1; i <= n; i++)
 	{
 		solve(i);
