@@ -1,3 +1,5 @@
+
+
 #include <functional> //c++17 function
 #include <vector>
 #include <string.h>
@@ -33,9 +35,14 @@ void print(ll t)
 	printf("%lld\n", t);
 }
 
-void print(std::string s)
+void print(std::string &s)
 {
-	printf("%s", s.c_str());
+	printf("%s\n", s.c_str());
+}
+
+void print(char *s)
+{
+	printf("%s\n", s);
 }
 
 void printVector(std::vector<ll> &v)
