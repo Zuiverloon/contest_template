@@ -30,19 +30,10 @@ typedef long long ll;
 ll mod1e9 = 1000000007LL;
 ll mod998 = 998244353LL;
 
-void print(ll t)
+template <typename T>
+void print(T &s)
 {
-	printf("%lld\n", t);
-}
-
-void print(std::string &s)
-{
-	printf("%s\n", s.c_str());
-}
-
-void print(char *s)
-{
-	printf("%s\n", s);
+	std::cout << s << "\n";
 }
 
 void printVector(std::vector<ll> &v)
