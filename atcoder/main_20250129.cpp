@@ -1,5 +1,5 @@
 /**
- * https://codeforces.com/problemset/problem/2037/C
+ * https://atcoder.jp/contests/abc133/tasks/abc133_e
  */
 
 #include <functional> //c++17 function
@@ -31,18 +31,6 @@ typedef long long ll;
 
 ll mod1e9 = 1000000007LL;
 ll mod998 = 998244353LL;
-
-template <typename T>
-void print(T &s)
-{
-    std::cout << s << "\n";
-}
-
-template <typename T>
-void print(T s)
-{
-    std::cout << s << "\n";
-}
 
 void printVector(std::vector<ll> &v)
 {
@@ -109,43 +97,44 @@ void exgcd(ll a, ll b, ll &x, ll &y)
 #define FOR(i, s, j, o) for (ll i = s; i < j; i += o)
 #define FORR(i, s, j, o) for (ll i = s; i > j; i += o)
 
+std::unordered_map<ll, std::unordered_set<ll>> mp;
+std::vector<ll> nei;
+
+void dfs(ll o, ll fa, ll &ans, ll n)
+{
+    if (fa != 0)
+    {
+        nei[o]++;
+    }
+    nei[o]++;
+    ll remain = n - nei[fa];
+    ans *= remain;
+    ans %= mod1e9;
+    for (ll next : mp[o])
+    {
+        if (next != fa)
+        {
+            dfs(next, o, ans, n);
+            nei[o]++;
+        }
+    }
+}
+
 void solve(int cas)
 {
-    ll n;
-    std::cin >> n;
-    if (n <= 4)
+    ll n, k;
+    std::cin >> n >> k;
+    nei = std::vector<ll>(n + 1, 0);
+    for (int i = 0; i < n - 1; i++)
     {
-        print(-1);
-        return;
+        ll a, b;
+        std::cin >> a >> b;
+        mp[a].insert(b);
+        mp[b].insert(a);
     }
-    std::vector<ll> ans(n, 0);
-    std::vector<bool> used(n + 1, false);
-    ll p = 0;
-    for (int i = 1; i <= n; i += 2)
-    {
-        ans[p++] = i;
-    }
-    if (ans[p - 1] % 3 == 1)
-    {
-        ans[p++] = 2;
-        used[2] = true;
-    }
-    else if (ans[p - 1] % 3 == 2)
-    {
-        ans[p++] = 4;
-        used[4] = true;
-    }
-    else
-    {
-        ans[p++] = 6;
-        used[6] = true;
-    }
-    for (int i = 2; i <= n; i += 2)
-    {
-        if (!used[i])
-            ans[p++] = i;
-    }
-    printVector(ans);
+    ll ans = 1;
+    dfs(1, 0, ans, k);
+    std::cout << ans << "\n";
 }
 
 int main()
@@ -156,7 +145,7 @@ int main()
     // initmobelong();
 
     int n = 1;
-    std::cin >> n;
+    // std::cin >> n;
     for (int i = 1; i <= n; i++)
     {
         solve(i);
