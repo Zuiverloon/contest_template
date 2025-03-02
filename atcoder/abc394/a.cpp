@@ -95,51 +95,17 @@ void exgcd(ll a, ll b, ll &x, ll &y)
 
 void solve(int cas)
 {
-    ll n;
-    std::cin >> n;
-    std::vector<ll> v(n, 0);
-    for (int i = 0; i < n; i++)
+    std::string s;
+    std::cin >> s;
+    ll cnt = 0;
+    for (int i = 0; i < s.length(); i++)
     {
-        std::cin >> v[i];
-    }
-    std::vector<ll> left(n, 0);
-    std::vector<ll> right(n, 0);
-    for (int i = 0; i < n; i++)
-    {
-        if (v[i] < 0)
+        if (s[i] == '2')
         {
-            left[i] = i - 1 < 0 ? 0 : left[i - 1];
-        }
-        else
-        {
-            left[i] = v[i] + (i - 1 < 0 ? 0 : left[i - 1]);
+            cnt++;
         }
     }
-    for (int i = n - 1; i >= 0; i--)
-    {
-        if (v[i] > 0)
-        {
-            right[i] = i + 1 >= n ? 0 : right[i + 1];
-        }
-        else
-        {
-            right[i] = std::abs(v[i]) + (i + 1 >= n ? 0 : right[i + 1]);
-        }
-    }
-    // printVector(left);
-    // printVector(right);
-    ll ans = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (v[i] > 0)
-        {
-            ans = std::max(ans, left[i] + (i + 1 >= n ? 0 : right[i + 1]));
-        }
-        else
-        {
-            ans = std::max(ans, (i - 1 < 0 ? 0 : left[i - 1]) + right[i]);
-        }
-    }
+    std::string ans(cnt, '2');
     std::cout << ans << "\n";
 }
 
@@ -151,7 +117,7 @@ int main()
     // initmobelong();
 
     int n = 1;
-    std::cin >> n;
+    // std::cin >> n;
     for (int i = 1; i <= n; i++)
     {
         solve(i);

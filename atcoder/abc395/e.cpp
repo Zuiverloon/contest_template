@@ -95,49 +95,63 @@ void exgcd(ll a, ll b, ll &x, ll &y)
 
 void solve(int cas)
 {
-    ll n;
-    std::cin >> n;
-    std::vector<ll> v(n, 0);
-    for (int i = 0; i < n; i++)
+    ll n, m, x;
+    std::cin >> n >> m >> x;
+    std::unordered_map<ll, std::unordered_set<ll>> mp;
+    std::unordered_map<ll, std::unordered_set<ll>> revmp;
+    std::vector<ll> mdis(n + 1, LLONG_MAX / 2);
+    std::vector<ll> rmdis(n + 1, LLONG_MAX / 2);
+    for (int i = 0; i < m; i++)
     {
-        std::cin >> v[i];
+        ll u, v;
+        std::cin >> u >> v;
+        mp[u].insert(v);
+        revmp[v].insert(u);
     }
-    std::vector<ll> left(n, 0);
-    std::vector<ll> right(n, 0);
-    for (int i = 0; i < n; i++)
+    auto cmp = [&](std::vector<ll> &v1, std::vector<ll> &v2)
     {
-        if (v[i] < 0)
-        {
-            left[i] = i - 1 < 0 ? 0 : left[i - 1];
-        }
-        else
-        {
-            left[i] = v[i] + (i - 1 < 0 ? 0 : left[i - 1]);
-        }
-    }
-    for (int i = n - 1; i >= 0; i--)
-    {
-        if (v[i] > 0)
-        {
-            right[i] = i + 1 >= n ? 0 : right[i + 1];
-        }
-        else
-        {
-            right[i] = std::abs(v[i]) + (i + 1 >= n ? 0 : right[i + 1]);
-        }
-    }
-    // printVector(left);
-    // printVector(right);
+        return v1[2] > v2[2];
+    };
+    std::priority_queue<std::vector<ll>, std::vector<std::vector<ll>>, std::function<bool(std::vector<ll> & v1, std::vector<ll> & v2)>>
+        pq(cmp);
+    pq.push(std::vector<ll>{1, 0, 0});
+    pq.push(std::vector<ll>{1, 1, x});
     ll ans = 0;
-    for (int i = 0; i < n; i++)
+
+    while (!pq.empty())
     {
-        if (v[i] > 0)
+        auto f = pq.top();
+        pq.pop();
+        // printVector(f);
+        if (f[0] == n)
         {
-            ans = std::max(ans, left[i] + (i + 1 >= n ? 0 : right[i + 1]));
+            ans = f[2];
+            break;
         }
-        else
+        ll newdis = f[2] + 1;
+        for (auto next : (f[1] == 0 ? mp[f[0]] : revmp[f[0]]))
         {
-            ans = std::max(ans, (i - 1 < 0 ? 0 : left[i - 1]) + right[i]);
+            if (f[1] == 0 && mdis[next] > newdis)
+            {
+                mdis[next] = newdis;
+
+                pq.push(std::vector<ll>{next, f[1], newdis});
+            }
+            if (f[1] == 1 && rmdis[next] > newdis)
+            {
+                rmdis[next] = newdis;
+                pq.push(std::vector<ll>{next, f[1], newdis});
+            }
+        }
+        if (f[1] == 0 && f[2] + x < rmdis[f[0]])
+        {
+            rmdis[f[0]] = f[2] + x;
+            pq.push(std::vector<ll>{f[0], 1, f[2] + x});
+        }
+        if (f[1] == 1 && f[2] + x < mdis[f[0]])
+        {
+            mdis[f[0]] = f[2] + x;
+            pq.push(std::vector<ll>{f[0], 0, f[2] + x});
         }
     }
     std::cout << ans << "\n";
@@ -151,7 +165,7 @@ int main()
     // initmobelong();
 
     int n = 1;
-    std::cin >> n;
+    // std::cin >> n;
     for (int i = 1; i <= n; i++)
     {
         solve(i);

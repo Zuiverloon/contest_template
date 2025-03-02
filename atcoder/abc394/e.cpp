@@ -97,50 +97,84 @@ void solve(int cas)
 {
     ll n;
     std::cin >> n;
-    std::vector<ll> v(n, 0);
+    std::vector<std::string> v(n, "");
+    std::vector<std::unordered_map<char, std::vector<ll>>> vmp(n, std::unordered_map<char, std::vector<ll>>());
+    std::vector<std::unordered_map<char, std::vector<ll>>> revmp(n, std::unordered_map<char, std::vector<ll>>());
     for (int i = 0; i < n; i++)
     {
         std::cin >> v[i];
     }
-    std::vector<ll> left(n, 0);
-    std::vector<ll> right(n, 0);
+    auto cmp = [&](std::vector<ll> &a1, std::vector<ll> &a2)
+    {
+        return a1[2] > a2[2];
+    };
+    std::priority_queue<std::vector<ll>, std::vector<std::vector<ll>>, std::function<bool(std::vector<ll> & a1, std::vector<ll> & a2)>> pq(cmp);
     for (int i = 0; i < n; i++)
     {
-        if (v[i] < 0)
+        for (int j = 0; j < n; j++)
         {
-            left[i] = i - 1 < 0 ? 0 : left[i - 1];
-        }
-        else
-        {
-            left[i] = v[i] + (i - 1 < 0 ? 0 : left[i - 1]);
+            if (v[i][j] != '-')
+            {
+                vmp[i][v[i][j]].push_back(j);
+                revmp[j][v[i][j]].push_back(i);
+                pq.push(std::vector<ll>{i, j, 1});
+                for (int k = 0; k < n; k++)
+                {
+                    if (v[j][k] == v[i][j])
+                    {
+                        pq.push(std::vector<ll>{i, k, 2});
+                    }
+                }
+            }
         }
     }
-    for (int i = n - 1; i >= 0; i--)
+    std::vector<std::vector<ll>> ans(n, std::vector<ll>(n, INT_MAX));
+    while (pq.size() > 0)
     {
-        if (v[i] > 0)
+        auto pre = pq.top();
+        ll i = pre[0];
+        ll j = pre[1];
+        ll curlen = pre[2];
+        ans[i][j] = std::min(ans[i][j], curlen);
+        pq.pop();
+        for (char c = 'a'; c <= 'z'; c++)
         {
-            right[i] = i + 1 >= n ? 0 : right[i + 1];
-        }
-        else
-        {
-            right[i] = std::abs(v[i]) + (i + 1 >= n ? 0 : right[i + 1]);
+            std::vector<ll> v1 = revmp[i][c];
+            std::vector<ll> v2 = vmp[j][c];
+            if (v1.size() != 0 && v2.size() != 0)
+            {
+                for (ll a : v1)
+                {
+                    for (ll b : v2)
+                    {
+                        if (curlen + 2 < ans[a][b])
+                        {
+                            ans[a][b] = curlen + 2;
+                            pq.push(std::vector<ll>{a, b, curlen + 2});
+                        }
+                    }
+                }
+            }
         }
     }
-    // printVector(left);
-    // printVector(right);
-    ll ans = 0;
     for (int i = 0; i < n; i++)
     {
-        if (v[i] > 0)
+        ans[i][i] = 0;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
         {
-            ans = std::max(ans, left[i] + (i + 1 >= n ? 0 : right[i + 1]));
-        }
-        else
-        {
-            ans = std::max(ans, (i - 1 < 0 ? 0 : left[i - 1]) + right[i]);
+            if (ans[i][j] == INT_MAX)
+            {
+                ans[i][j] = -1;
+            }
         }
     }
-    std::cout << ans << "\n";
+    for (int i = 0; i < n; i++)
+    {
+        printVector(ans[i]);
+    }
 }
 
 int main()
@@ -151,7 +185,7 @@ int main()
     // initmobelong();
 
     int n = 1;
-    std::cin >> n;
+    // std::cin >> n;
     for (int i = 1; i <= n; i++)
     {
         solve(i);

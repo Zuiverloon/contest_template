@@ -93,54 +93,73 @@ void exgcd(ll a, ll b, ll &x, ll &y)
 #define FOR(i, s, j, o) for (ll i = s; i < j; i += o)
 #define FORR(i, s, j, o) for (ll i = s; i > j; i += o)
 
+bool valid(std::vector<std::vector<ll>> &v, ll tar, ll x)
+{
+
+    ll up, down;
+    for (int i = 0; i < v.size(); i++)
+    {
+        if (i == 0)
+        {
+            up = std::min(tar, v[i][1]);
+            down = std::max(0LL, tar - v[i][0]);
+        }
+        else
+        {
+            if (up < down)
+            {
+                return false;
+            }
+            // ll cur0 = v[i][0];
+            // ll cur1 = v[i][1];
+            ll mup = std::min(tar, v[i][1]);
+            ll mdown = std::max(0LL, tar - v[i][0]);
+            if (mdown > up + x)
+            {
+                return false;
+            }
+            if (mup < down - x)
+            {
+                return false;
+            }
+
+            up = std::min(up + x, mup);
+            down = std::max(down - x, mdown);
+        }
+    }
+    return true;
+}
+
 void solve(int cas)
 {
-    ll n;
-    std::cin >> n;
-    std::vector<ll> v(n, 0);
+    ll n, x;
+    std::cin >> n >> x;
+    std::vector<std::vector<ll>> v(n, std::vector<ll>(2, 0));
+    ll r = LLONG_MAX;
+    ll sm = 0;
     for (int i = 0; i < n; i++)
     {
-        std::cin >> v[i];
+        std::cin >> v[i][0] >> v[i][1];
+        r = std::min(r, v[i][0] + v[i][1]);
+        sm += v[i][0];
+        sm += v[i][1];
     }
-    std::vector<ll> left(n, 0);
-    std::vector<ll> right(n, 0);
-    for (int i = 0; i < n; i++)
-    {
-        if (v[i] < 0)
-        {
-            left[i] = i - 1 < 0 ? 0 : left[i - 1];
-        }
-        else
-        {
-            left[i] = v[i] + (i - 1 < 0 ? 0 : left[i - 1]);
-        }
-    }
-    for (int i = n - 1; i >= 0; i--)
-    {
-        if (v[i] > 0)
-        {
-            right[i] = i + 1 >= n ? 0 : right[i + 1];
-        }
-        else
-        {
-            right[i] = std::abs(v[i]) + (i + 1 >= n ? 0 : right[i + 1]);
-        }
-    }
-    // printVector(left);
-    // printVector(right);
+    ll l = 0;
     ll ans = 0;
-    for (int i = 0; i < n; i++)
+    while (l <= r)
     {
-        if (v[i] > 0)
+        ll mid = (l + r) / 2;
+        if (valid(v, mid, x))
         {
-            ans = std::max(ans, left[i] + (i + 1 >= n ? 0 : right[i + 1]));
+            ans = mid;
+            l = mid + 1;
         }
         else
         {
-            ans = std::max(ans, (i - 1 < 0 ? 0 : left[i - 1]) + right[i]);
+            r = mid - 1;
         }
     }
-    std::cout << ans << "\n";
+    std::cout << sm - ans * n << "\n";
 }
 
 int main()
@@ -151,7 +170,7 @@ int main()
     // initmobelong();
 
     int n = 1;
-    std::cin >> n;
+    // std::cin >> n;
     for (int i = 1; i <= n; i++)
     {
         solve(i);

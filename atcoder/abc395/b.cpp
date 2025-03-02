@@ -97,50 +97,77 @@ void solve(int cas)
 {
     ll n;
     std::cin >> n;
-    std::vector<ll> v(n, 0);
-    for (int i = 0; i < n; i++)
+    std::vector<std::string> v(n, std::string(n, ' '));
+    ll limit = n * n;
+    for (int i = 0; i <= n / 2; i += 1)
     {
-        std::cin >> v[i];
+        ll r = i, c = i;
+        ll d = 0;
+        char ch = i % 2 == 0 ? '#' : '.';
+        // ll trans = 0;
+        while (limit > 0)
+        {
+            // std::cout << r << " " << c << "\n";
+            v[r][c] = ch;
+            limit--;
+            if (limit == 0)
+            {
+                break;
+            }
+
+            if (d == 0)
+            {
+                if (c + 1 >= n - i)
+                {
+                    d++;
+                    r++;
+                }
+                else
+                {
+                    c++;
+                }
+            }
+            else if (d == 1)
+            {
+                if (r + 1 >= n - i)
+                {
+                    d++;
+                    c--;
+                }
+                else
+                {
+                    r++;
+                }
+            }
+            else if (d == 2)
+            {
+                if (c - 1 < i)
+                {
+                    r--;
+                    d++;
+                }
+                else
+                {
+                    c--;
+                }
+            }
+            else if (d == 3)
+            {
+                if (r - 1 <= i)
+                {
+                    break;
+                }
+                else
+                {
+                    r--;
+                }
+            }
+        }
     }
-    std::vector<ll> left(n, 0);
-    std::vector<ll> right(n, 0);
-    for (int i = 0; i < n; i++)
+    for (std::string s : v)
     {
-        if (v[i] < 0)
-        {
-            left[i] = i - 1 < 0 ? 0 : left[i - 1];
-        }
-        else
-        {
-            left[i] = v[i] + (i - 1 < 0 ? 0 : left[i - 1]);
-        }
+        std::cout << s << "\n";
     }
-    for (int i = n - 1; i >= 0; i--)
-    {
-        if (v[i] > 0)
-        {
-            right[i] = i + 1 >= n ? 0 : right[i + 1];
-        }
-        else
-        {
-            right[i] = std::abs(v[i]) + (i + 1 >= n ? 0 : right[i + 1]);
-        }
-    }
-    // printVector(left);
-    // printVector(right);
-    ll ans = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (v[i] > 0)
-        {
-            ans = std::max(ans, left[i] + (i + 1 >= n ? 0 : right[i + 1]));
-        }
-        else
-        {
-            ans = std::max(ans, (i - 1 < 0 ? 0 : left[i - 1]) + right[i]);
-        }
-    }
-    std::cout << ans << "\n";
 }
 
 int main()
@@ -151,7 +178,7 @@ int main()
     // initmobelong();
 
     int n = 1;
-    std::cin >> n;
+    // std::cin >> n;
     for (int i = 1; i <= n; i++)
     {
         solve(i);

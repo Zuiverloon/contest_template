@@ -1,3 +1,4 @@
+
 #include <functional> //c++17 function
 #include <vector>
 #include <string.h>
@@ -93,53 +94,76 @@ void exgcd(ll a, ll b, ll &x, ll &y)
 #define FOR(i, s, j, o) for (ll i = s; i < j; i += o)
 #define FORR(i, s, j, o) for (ll i = s; i > j; i += o)
 
+ll ans = -1;
+std::vector<std::unordered_set<ll>> v;
+std::vector<ll> dp;
+
+ll dfs(ll o, ll f)
+{
+    // std::cout << "o f " << o << " " << f << "\n";
+    if (dp[o] != -1)
+    {
+        return dp[o];
+    }
+    // ll tans = 1;
+    std::vector<ll> nxt;
+    for (ll next : v[o])
+    {
+        if (next != f)
+        {
+            nxt.push_back(dfs(next, o));
+        }
+    }
+    std::sort(nxt.begin(), nxt.end(), std::greater<ll>());
+    if (nxt.size() < 1)
+    {
+        dp[o] = 1;
+        return dp[o];
+    }
+    else if (nxt.size() < 3)
+    {
+        ans = std::max(ans, 1 + nxt[0]);
+        dp[o] = 1;
+        return dp[o];
+    }
+    else if (nxt.size() < 4)
+    {
+        dp[o] = 1 + nxt[0] + nxt[1] + nxt[2];
+        return dp[o];
+    }
+    else
+    {
+        dp[o] = 1 + nxt[0] + nxt[1] + nxt[2];
+
+        ans = std::max(ans, 1 + nxt[0] + nxt[1] + nxt[2] + nxt[3]);
+        return dp[o];
+    }
+}
+
 void solve(int cas)
 {
     ll n;
     std::cin >> n;
-    std::vector<ll> v(n, 0);
-    for (int i = 0; i < n; i++)
+    v = std::vector<std::unordered_set<ll>>(n + 1, std::unordered_set<ll>());
+    dp = std::vector<ll>(n + 1, -1);
+    bool valid = false;
+    for (int i = 0; i < n - 1; i++)
     {
-        std::cin >> v[i];
-    }
-    std::vector<ll> left(n, 0);
-    std::vector<ll> right(n, 0);
-    for (int i = 0; i < n; i++)
-    {
-        if (v[i] < 0)
+        ll a, b;
+        std::cin >> a >> b;
+        v[a].insert(b);
+        v[b].insert(a);
+        if (v[a].size() >= 4 || v[b].size() >= 4)
         {
-            left[i] = i - 1 < 0 ? 0 : left[i - 1];
-        }
-        else
-        {
-            left[i] = v[i] + (i - 1 < 0 ? 0 : left[i - 1]);
+            valid = true;
         }
     }
-    for (int i = n - 1; i >= 0; i--)
+    if (!valid)
     {
-        if (v[i] > 0)
-        {
-            right[i] = i + 1 >= n ? 0 : right[i + 1];
-        }
-        else
-        {
-            right[i] = std::abs(v[i]) + (i + 1 >= n ? 0 : right[i + 1]);
-        }
+        std::cout << "-1\n";
+        return;
     }
-    // printVector(left);
-    // printVector(right);
-    ll ans = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (v[i] > 0)
-        {
-            ans = std::max(ans, left[i] + (i + 1 >= n ? 0 : right[i + 1]));
-        }
-        else
-        {
-            ans = std::max(ans, (i - 1 < 0 ? 0 : left[i - 1]) + right[i]);
-        }
-    }
+    dfs(1, -1);
     std::cout << ans << "\n";
 }
 
@@ -151,7 +175,7 @@ int main()
     // initmobelong();
 
     int n = 1;
-    std::cin >> n;
+    // std::cin >> n;
     for (int i = 1; i <= n; i++)
     {
         solve(i);

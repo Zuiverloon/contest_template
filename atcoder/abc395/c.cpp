@@ -93,6 +93,29 @@ void exgcd(ll a, ll b, ll &x, ll &y)
 #define FOR(i, s, j, o) for (ll i = s; i < j; i += o)
 #define FORR(i, s, j, o) for (ll i = s; i > j; i += o)
 
+bool valid(std::vector<ll> &v, ll len)
+{
+    std::vector<ll> cnt(1000005, 0);
+    for (int i = 0; i < len - 1; i++)
+    {
+        cnt[v[i]]++;
+        if (cnt[v[i]] >= 2)
+        {
+            return true;
+        }
+    }
+    for (int i = len - 1; i < v.size(); i++)
+    {
+        cnt[v[i]]++;
+        if (cnt[v[i]] >= 2)
+        {
+            return true;
+        }
+        cnt[v[i - len + 1]]--;
+    }
+    return false;
+}
+
 void solve(int cas)
 {
     ll n;
@@ -102,42 +125,19 @@ void solve(int cas)
     {
         std::cin >> v[i];
     }
-    std::vector<ll> left(n, 0);
-    std::vector<ll> right(n, 0);
-    for (int i = 0; i < n; i++)
+    ll l = 2, r = n;
+    ll ans = -1;
+    while (l <= r)
     {
-        if (v[i] < 0)
+        ll mid = (l + r) / 2;
+        if (valid(v, mid))
         {
-            left[i] = i - 1 < 0 ? 0 : left[i - 1];
+            ans = mid;
+            r = mid - 1;
         }
         else
         {
-            left[i] = v[i] + (i - 1 < 0 ? 0 : left[i - 1]);
-        }
-    }
-    for (int i = n - 1; i >= 0; i--)
-    {
-        if (v[i] > 0)
-        {
-            right[i] = i + 1 >= n ? 0 : right[i + 1];
-        }
-        else
-        {
-            right[i] = std::abs(v[i]) + (i + 1 >= n ? 0 : right[i + 1]);
-        }
-    }
-    // printVector(left);
-    // printVector(right);
-    ll ans = 0;
-    for (int i = 0; i < n; i++)
-    {
-        if (v[i] > 0)
-        {
-            ans = std::max(ans, left[i] + (i + 1 >= n ? 0 : right[i + 1]));
-        }
-        else
-        {
-            ans = std::max(ans, (i - 1 < 0 ? 0 : left[i - 1]) + right[i]);
+            l = mid + 1;
         }
     }
     std::cout << ans << "\n";
@@ -151,7 +151,7 @@ int main()
     // initmobelong();
 
     int n = 1;
-    std::cin >> n;
+    // std::cin >> n;
     for (int i = 1; i <= n; i++)
     {
         solve(i);
