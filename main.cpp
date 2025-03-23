@@ -1,5 +1,3 @@
-
-
 #include <functional> //c++17 function
 #include <vector>
 #include <string.h>
@@ -29,12 +27,6 @@ typedef long long ll;
 
 ll mod1e9 = 1000000007LL;
 ll mod998 = 998244353LL;
-
-template <typename T>
-void print(T &s)
-{
-	std::cout << s << "\n";
-}
 
 void printVector(std::vector<ll> &v)
 {
@@ -87,6 +79,17 @@ ll lowbit(ll a)
 	return a & (-a);
 }
 
+ll highbit(ll a)
+{
+	ll lb = lowbit(a);
+	while (lb != a)
+	{
+		a -= lb;
+		lb = lowbit(a);
+	}
+	return lb;
+}
+
 void exgcd(ll a, ll b, ll &x, ll &y)
 {
 	if (b == 0)
@@ -103,6 +106,91 @@ void exgcd(ll a, ll b, ll &x, ll &y)
 
 void solve(int cas)
 {
+	ll n, k;
+	std::cin >> n >> k;
+	std::vector<ll> v(n, 0);
+	for (ll i = 0; i < n; i++)
+	{
+		std::cin >> v[i];
+	}
+	auto cmp = [&](std::vector<ll> &a1, std::vector<ll> &a2)
+	{
+		return a1[1] < a2[1];
+	};
+	std::priority_queue<std::vector<ll>, std::vector<std::vector<ll>>, std::function<bool(std::vector<ll> & a, std::vector<ll> & b)>> pq(cmp);
+	std::map<ll, std::map<ll, ll>> mp;
+	pq.push(std::vector<ll>{1, 0, 0});
+	pq.push(std::vector<ll>{1, v[0], k});
+	mp[1][k] = v[0];
+	ll ans = 0;
+
+	while (pq.size() > 0)
+	{
+		auto fr = pq.top();
+		pq.pop();
+		ll timeleft = fr[2];
+		ll deli = fr[1];
+		ll offset = fr[0];
+
+		ll nx = 0;
+		if (deli < mp[offset][timeleft])
+		{
+			continue;
+		}
+		if (timeleft > n - offset)
+		{
+			continue;
+		}
+		if (timeleft == n - offset)
+		{
+			ans = std::max({ans, deli});
+			continue;
+		}
+		if (timeleft == 0)
+		{
+			ans = std::max({ans, deli});
+		}
+		if (offset == n)
+		{
+			if (timeleft != 0)
+			{
+				continue;
+			}
+			else
+			{
+				ans = std::max({ans, deli});
+				break;
+			}
+		}
+		// do nothing
+		nx = mp[offset + 1][timeleft];
+		if ((nx != 0 && nx < deli) || nx == 0)
+		{
+			mp[offset + 1][timeleft] = deli;
+			pq.push(std::vector<ll>{offset + 1, deli, timeleft});
+		}
+		// eat
+		if (timeleft > 0)
+		{
+			nx = mp[offset + 1][timeleft - 1];
+			if ((nx != 0 && nx < deli) || nx == 0)
+			{
+				mp[offset + 1][timeleft] = deli;
+				pq.push(std::vector<ll>{offset + 1, deli, timeleft - 1});
+			}
+		}
+		nx = mp[offset + 1][timeleft + k];
+		if ((nx != 0 && nx < deli + v[offset]) || nx == 0)
+		{
+			// add
+			mp[offset + 1][timeleft + k] = deli + v[offset];
+			pq.push(std::vector<ll>{
+				offset + 1,
+				deli + v[offset],
+				timeleft + k});
+		}
+	}
+	std::cout << ans << "\n";
 }
 
 int main()
