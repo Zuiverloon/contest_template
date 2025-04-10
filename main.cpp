@@ -22,11 +22,25 @@
 // #include <bits/stdc++.h>
 
 typedef long long ll;
+using namespace std;
 
 // clang++ -std=c++17 main.cpp -o main
 
 ll mod1e9 = 1000000007LL;
 ll mod998 = 998244353LL;
+
+ll gcd(ll a, ll b)
+{
+	if (a < b)
+	{
+		return gcd(b, a);
+	}
+	if (b == 0)
+	{
+		return a;
+	}
+	return gcd(b, a % b);
+}
 
 void printVector(std::vector<ll> &v)
 {
@@ -116,7 +130,7 @@ int main()
 	// initmobelong();
 
 	int n = 1;
-	std::cin >> n;
+	// std::cin >> n;
 	for (int i = 1; i <= n; i++)
 	{
 		solve(i);
