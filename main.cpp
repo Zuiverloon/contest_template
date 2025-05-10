@@ -1,3 +1,5 @@
+
+
 #include <functional> //c++17 function
 #include <vector>
 #include <string.h>
@@ -28,6 +30,7 @@ using namespace std;
 
 ll mod1e9 = 1000000007LL;
 ll mod998 = 998244353LL;
+ll mod1e8 = 100000000LL - 3;
 
 ll gcd(ll a, ll b)
 {
@@ -104,6 +107,17 @@ ll highbit(ll a)
 	return lb;
 }
 
+ll countone(ll a)
+{
+	ll ans = 0;
+	while (a > 0)
+	{
+		ans += (a & 1);
+		a >>= 1;
+	}
+	return ans;
+}
+
 void exgcd(ll a, ll b, ll &x, ll &y)
 {
 	if (b == 0)
@@ -115,11 +129,81 @@ void exgcd(ll a, ll b, ll &x, ll &y)
 	y -= a / b * x;
 }
 
+/***     dsu template           */
+vector<ll> fa;
+
+ll get(ll i)
+{
+	if (fa[i] != i)
+	{
+		fa[i] = get(fa[i]);
+	}
+	return fa[i];
+}
+
+void merge(ll a, ll b)
+{
+	fa[get(b)] = get(a);
+}
+
+/***     dsu template           */
+
 #define FOR(i, s, j, o) for (ll i = s; i < j; i += o)
 #define FORR(i, s, j, o) for (ll i = s; i > j; i += o)
 
+vector<ll> ans;
+
+void f(vector<ll> &t, ll k, ll pos)
+{
+	deque<vector<ll>> que;
+	que.push_back(vector<ll>{0, t[0], 0});
+	for (ll i = 1; i < t.size(); i++)
+	{
+		while (!que.empty() && que.front()[0] + k < i)
+		{
+			que.pop_front();
+		}
+		auto &fr = que.front();
+		ll newval = fr[2] + (fr[1] <= t[i] ? 1 : 0);
+		// cout << "test " << i << " " << newval << "\n";
+		if (i == t.size() - 1)
+		{
+			ans[pos] = newval;
+			return;
+		}
+		else
+		{
+			while (!que.empty() && (que.back()[2] > newval || (que.back()[2] == newval && que.back()[1] < t[i])))
+			{
+				que.pop_back();
+			}
+			que.push_back(vector<ll>{i, t[i], newval});
+		}
+	}
+}
+
 void solve(int cas)
 {
+	ll n;
+	cin >> n;
+	vector<ll> tree(n, 0);
+	for (ll i = 0; i < n; i++)
+	{
+		cin >> tree[i];
+	}
+	ll q;
+	cin >> q;
+	vector<ll> v(q, 0);
+	ans = vector<ll>(q, 0);
+	for (ll i = 0; i < q; i++)
+	{
+		cin >> v[i];
+		f(tree, v[i], i);
+	}
+	for (ll i = 0; i < q; i++)
+	{
+		cout << ans[i] << "\n";
+	}
 }
 
 int main()

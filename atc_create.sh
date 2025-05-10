@@ -1,4 +1,4 @@
-idx="abc400"
+idx="abc404"
 path="./atcoder/${idx}"
 mkdir $path
 cd $path
