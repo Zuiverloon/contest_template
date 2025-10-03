@@ -45,6 +45,16 @@ ll gcd(ll a, ll b)
 	return gcd(b, a % b);
 }
 
+void printYes()
+{
+	cout << "Yes\n";
+}
+
+void printNo()
+{
+	cout << "No\n";
+}
+
 void printVector(std::vector<ll> &v)
 {
 	for (int i = 0; i < v.size(); i++)
@@ -151,59 +161,8 @@ void merge(ll a, ll b)
 #define FOR(i, s, j, o) for (ll i = s; i < j; i += o)
 #define FORR(i, s, j, o) for (ll i = s; i > j; i += o)
 
-vector<ll> ans;
-
-void f(vector<ll> &t, ll k, ll pos)
-{
-	deque<vector<ll>> que;
-	que.push_back(vector<ll>{0, t[0], 0});
-	for (ll i = 1; i < t.size(); i++)
-	{
-		while (!que.empty() && que.front()[0] + k < i)
-		{
-			que.pop_front();
-		}
-		auto &fr = que.front();
-		ll newval = fr[2] + (fr[1] <= t[i] ? 1 : 0);
-		// cout << "test " << i << " " << newval << "\n";
-		if (i == t.size() - 1)
-		{
-			ans[pos] = newval;
-			return;
-		}
-		else
-		{
-			while (!que.empty() && (que.back()[2] > newval || (que.back()[2] == newval && que.back()[1] < t[i])))
-			{
-				que.pop_back();
-			}
-			que.push_back(vector<ll>{i, t[i], newval});
-		}
-	}
-}
-
 void solve(int cas)
 {
-	ll n;
-	cin >> n;
-	vector<ll> tree(n, 0);
-	for (ll i = 0; i < n; i++)
-	{
-		cin >> tree[i];
-	}
-	ll q;
-	cin >> q;
-	vector<ll> v(q, 0);
-	ans = vector<ll>(q, 0);
-	for (ll i = 0; i < q; i++)
-	{
-		cin >> v[i];
-		f(tree, v[i], i);
-	}
-	for (ll i = 0; i < q; i++)
-	{
-		cout << ans[i] << "\n";
-	}
 }
 
 int main()
@@ -214,7 +173,7 @@ int main()
 	// initmobelong();
 
 	int n = 1;
-	// std::cin >> n;
+	std::cin >> n;
 	for (int i = 1; i <= n; i++)
 	{
 		solve(i);
