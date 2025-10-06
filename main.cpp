@@ -139,25 +139,6 @@ void exgcd(ll a, ll b, ll &x, ll &y)
 	y -= a / b * x;
 }
 
-/***     dsu template           */
-vector<ll> fa;
-
-ll get(ll i)
-{
-	if (fa[i] != i)
-	{
-		fa[i] = get(fa[i]);
-	}
-	return fa[i];
-}
-
-void merge(ll a, ll b)
-{
-	fa[get(b)] = get(a);
-}
-
-/***     dsu template           */
-
 #define FOR(i, s, j, o) for (ll i = s; i < j; i += o)
 #define FORR(i, s, j, o) for (ll i = s; i > j; i += o)
 
@@ -167,10 +148,9 @@ struct DSU
 	ll n;
 
 public:
-	DSU(ll len)
+	DSU(ll len) : n(len)
 	{
-		n = len;
-		fa = vector<ll>(n, 0);
+		fa = vector<ll>(len, 0);
 		for (ll i = 0; i < fa.size(); i++)
 		{
 			fa[i] = i;
@@ -179,10 +159,42 @@ public:
 
 	ll get(ll o)
 	{
+		return 0;
 	}
 
 	void merge(ll x, ll y)
 	{
+	}
+};
+
+struct FT
+{
+private:
+	vector<ll> v;
+	ll n;
+	ll lowbit(ll i)
+	{
+		return i & (-i);
+	}
+
+public:
+	FT(ll len) : n(len)
+	{
+		v = vector<ll>(len, 0);
+	}
+
+	void add(ll pos, ll val)
+	{
+	}
+
+	ll get(ll pos)
+	{
+		return 0;
+	}
+
+	ll get(ll l, ll r)
+	{
+		return get(r) - get(l - 1);
 	}
 };
 
