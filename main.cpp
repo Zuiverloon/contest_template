@@ -237,6 +237,30 @@ public:
 	}
 };
 
+// sparse table
+struct ST
+{
+private:
+	vector<vector<ll>> st;
+	ll n;
+	ll width;
+
+public:
+	ST(ll _n, ll _width) : n(_n), width(_width)
+	{
+		st = vector<vector<ll>>(n, vector<ll>(width, 0));
+	}
+
+	void init(vector<ll> &v)
+	{
+	}
+
+	ll get(ll l, ll r)
+	{
+		return 0;
+	}
+};
+
 void solve(int cas)
 {
 }
