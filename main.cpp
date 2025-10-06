@@ -198,6 +198,45 @@ public:
 	}
 };
 
+struct LST
+{
+private:
+	vector<ll> tree;
+	vector<ll> tag;
+	ll n;
+	void pushdown(ll lb, ll rb, ll o)
+	{
+
+		return;
+	}
+
+public:
+	LST(ll len) : n(len - 1)
+	{
+		tree = vector<ll>(4 * n + 10, 0);
+		tag = vector<ll>(4 * n + 10, 0);
+	}
+
+	ll get(ll l, ll r)
+	{
+		return get(1, n, l, r, 0);
+	}
+
+	ll get(ll lb, ll rb, ll l, ll r, ll o)
+	{
+		return 0;
+	}
+
+	void update(ll l, ll r, ll val)
+	{
+		return update(1, n, l, r, val, 0);
+	}
+
+	void update(ll lb, ll rb, ll l, ll r, ll val, ll o)
+	{
+	}
+};
+
 void solve(int cas)
 {
 }
