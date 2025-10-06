@@ -161,6 +161,31 @@ void merge(ll a, ll b)
 #define FOR(i, s, j, o) for (ll i = s; i < j; i += o)
 #define FORR(i, s, j, o) for (ll i = s; i > j; i += o)
 
+struct DSU
+{
+	vector<ll> fa;
+	ll n;
+
+public:
+	DSU(ll len)
+	{
+		n = len;
+		fa = vector<ll>(n, 0);
+		for (ll i = 0; i < fa.size(); i++)
+		{
+			fa[i] = i;
+		}
+	}
+
+	ll get(ll o)
+	{
+	}
+
+	void merge(ll x, ll y)
+	{
+	}
+};
+
 void solve(int cas)
 {
 }
@@ -173,7 +198,7 @@ int main()
 	// initmobelong();
 
 	int n = 1;
-	std::cin >> n;
+	// std::cin >> n;
 	for (int i = 1; i <= n; i++)
 	{
 		solve(i);
