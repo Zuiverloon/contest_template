@@ -139,6 +139,17 @@ void exgcd(ll a, ll b, ll &x, ll &y)
 	y -= a / b * x;
 }
 
+ll getexgcd(ll i, ll mod)
+{
+	ll x, y;
+	exgcd(i, mod, x, y);
+	if (x < 0)
+	{
+		x += mod;
+	}
+	return x % mod;
+}
+
 #define FOR(i, s, j, o) for (ll i = s; i < j; i += o)
 #define FORR(i, s, j, o) for (ll i = s; i > j; i += o)
 
@@ -273,7 +284,7 @@ int main()
 	// initmobelong();
 
 	int n = 1;
-	// std::cin >> n;
+	std::cin >> n;
 	for (int i = 1; i <= n; i++)
 	{
 		solve(i);
